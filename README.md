@@ -10,10 +10,17 @@ This is a [Hubot](https://github.com/github/hubot) script for [Shipr](https://gi
    $ npm install hubot-shipr --save
    ```
 
-2. Set the the following environment variables on your instance of hubot:
+2. Add `hubot-shipr` to external-scripts.json:
+
+   ```json
+   ["hubot-shipr"]
+   ```
+
+3. Set the the following environment variables on your instance of hubot:
 
    ```
    SHIPR_BASE=<base url for shipr>
+   SHIPR_AUTH=:<api key>
    SHIPR_GITHUB_ORG=<your github organization>
    ```
 
