@@ -20,7 +20,7 @@ module.exports = (robot) ->
       @branch = components[1]
 
       @environment = @options.environment || 'production'
-      @force       = false
+      @force       = @options.force || false
       @nwo         = "#{@constructor.organization}/#{@name}"
       @repo        = "git@github.com:#{@nwo}.git"
 

@@ -6,9 +6,10 @@ module.exports = (robot) ->
       msg.reply "Deploying #{deploy.name} to #{deploy.environment}: #{Deploy.base}/deploys/#{body.id}"
 
   robot.respond /deploy (\S+?)(!)?$/, (msg) ->
-    name = msg.match[1]
+    name  = msg.match[1]
+    force = msg.match[2]
 
-    perform msg, name
+    perform msg, name, force: force
 
   robot.respond /deploy (\S+?) to (\S+?)(!)?$/, (msg) ->
     name        = msg.match[1]
