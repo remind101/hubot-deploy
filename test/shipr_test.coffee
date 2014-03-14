@@ -2,7 +2,7 @@ process.env.SHIPR_BASE = 'http://shipr.test'
 process.env.SHIPR_GITHUB_ORG = 'remind101'
 
 {expect} = require 'chai'
-init     = require './shipr'
+init     = require '../scripts/shipr'
 nock     = require 'nock'
 
 {Robot,TextMessage} = require('hubot')
@@ -122,7 +122,7 @@ runRobot = (cb) ->
   robot = new Robot(null, 'mock-adapter', false, 'hubot')
   robot.adapter.on 'connected', =>
     @user = robot.brain.userForId('1', name: 'eric', room: 'Neckbeards')
-    require('./shipr')(robot)
+    init(robot)
     @adapter = robot.adapter
     cb()
   robot.run()

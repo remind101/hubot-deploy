@@ -15,7 +15,7 @@
 #   ejholmes
 
 module.exports = (robot) ->
-  Deploy = require('./deploy')(robot)
+  Deploy = require('../lib/deploy')(robot)
 
   perform = (msg, name, options = {}) ->
     deploy = new Deploy(name, options).deploy (err, res, body) ->
