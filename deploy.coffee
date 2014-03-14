@@ -20,10 +20,12 @@ module.exports = (robot) ->
       @branch = components[1]
 
       @environment = @options.environment || 'production'
-      @branch      = if @environment == 'staging' then 'develop' else 'master'
       @force       = false
       @nwo         = "#{@constructor.organization}/#{@name}"
       @repo        = "git@github.com:#{@nwo}.git"
+
+      unless @branch
+        @branch = if @environment == 'staging' then 'develop' else 'master'
 
       @config = ENVIRONMENT: @environment
       @config.FORCE = '1' if @force

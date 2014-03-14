@@ -49,6 +49,19 @@ TESTS =
         id: ':id'
     reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
+  'deploy app#topic to staging':
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'topic'
+        config:
+          ENVIRONMENT: 'staging'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
+
 describe 'shipr', ->
 
   beforeEach (done) ->
