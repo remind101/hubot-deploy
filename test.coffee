@@ -9,6 +9,46 @@ nock     = require 'nock'
 
 shipr = nock(process.env.SHIPR_BASE).log(console.log)
 
+TESTS =
+  'deploy app to production':
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'master'
+        config:
+          ENVIRONMENT: 'production'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id"
+
+  'deploy app':
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'master'
+        config:
+          ENVIRONMENT: 'production'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id"
+
+  'deploy app to staging':
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'develop'
+        config:
+          ENVIRONMENT: 'staging'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
+
 describe 'shipr', ->
 
   beforeEach (done) ->
@@ -17,24 +57,20 @@ describe 'shipr', ->
   afterEach ->
     nock.cleanAll()
 
-  describe 'deploy <repo> to <environment>', ->
+  for command, test of TESTS
+    do (command, test) =>
+      describe command, ->
 
-    beforeEach ->
-      shipr
-        .post('/api/deploys',
-          repo: 'git@github.com:remind101/app.git',
-          branch: 'master',
-          config:
-            ENVIRONMENT: 'production'
-        )
-        .reply(201, { id: ':id' }, { 'Content-Type': 'application/json' })
+        beforeEach ->
+          shipr
+            .post('/api/deploys', test.request.body)
+            .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
 
-    it 'deploys the repo', (done) ->
-      @adapter.on 'reply', (envelope, strings) ->
-        expect(strings[0]).to.eq("Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id")
-        done()
-
-      @adapter.receive(new TextMessage(@user, 'hubot deploy app to production'))
+        it 'responds appropriately', (done) ->
+          @adapter.on 'reply', (envelope, strings) ->
+            expect(strings[0]).to.eq(test.reply)
+            done()
+          @adapter.receive(new TextMessage(@user, "hubot #{command}"))
 
 # Run the robot.
 #

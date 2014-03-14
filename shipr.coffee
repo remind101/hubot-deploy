@@ -2,7 +2,7 @@ module.exports = (robot) ->
   Deploy = require('./deploy')(robot)
 
   perform = (msg, name, options = {}) ->
-    deploy = new Deploy(name).deploy (err, res, body) ->
+    deploy = new Deploy(name, options).deploy (err, res, body) ->
       msg.reply "Deploying #{deploy.name} to #{deploy.environment}: #{Deploy.base}/deploys/#{body.id}"
 
   robot.respond /deploy (\S+?)(!)?$/, (msg) ->
