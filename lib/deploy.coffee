@@ -9,6 +9,7 @@ module.exports = (robot) ->
   #
   class Deploy
     @base: process.env.SHIPR_BASE
+    @auth: process.env.SHIPR_AUTH
     @endpoint: "#{@base}/api/deploys"
     @organization: process.env.SHIPR_GITHUB_ORG
     @delimiter: '#'
@@ -51,6 +52,9 @@ module.exports = (robot) ->
     #
     # Returns a scoped http client.
     _http: ->
+      auth = "Basic #{new Buffer(@constructor.auth).toString('base64')}"
+
       robot.http.apply(robot.http, arguments)
         .header('Accept', 'application/json')
         .header('Content-Type', 'application/json')
+        .header('Authorization', auth)

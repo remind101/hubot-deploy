@@ -1,5 +1,6 @@
 process.env.SHIPR_BASE = 'http://shipr.test'
 process.env.SHIPR_GITHUB_ORG = 'remind101'
+process.env.SHIPR_AUTH = ':apikey'
 
 {expect} = require 'chai'
 init     = require '../scripts/shipr'
@@ -104,7 +105,7 @@ describe 'shipr', ->
 
         beforeEach ->
           shipr
-            .post('/api/deploys', test.request.body)
+            .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
             .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
 
         it 'responds appropriately', (done) ->
