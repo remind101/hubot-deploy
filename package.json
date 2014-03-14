@@ -1,6 +1,6 @@
 {
   "name": "hubot-shipr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./shipr.coffee",
   "repository": {
     "type": "git",
