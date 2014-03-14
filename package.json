@@ -1,4 +1,7 @@
 {
+  "name": "hubot-shipr",
+  "repository": "https://github.com:remind101/hubot-shipr.git",
+  "version": "0.0.1",
   "main": "./shipr.coffee",
   "devDependencies": {
     "sinon": "~1.8.2",
