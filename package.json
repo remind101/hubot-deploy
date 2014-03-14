@@ -6,6 +6,15 @@
     "type": "git",
     "url": "https://github.com/remind101/hubot-shipr"
   },
+  "keywords": [
+    "hubot",
+    "shipr"
+  ],
+  "author": "Eric Holmes",
+  "license": "MIT",
+  "dependencies": {
+    "hubot": "*"
+  },
   "devDependencies": {
     "sinon": "~1.8.2",
     "mocha": "~1.17.1",
