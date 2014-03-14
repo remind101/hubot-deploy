@@ -1,3 +1,19 @@
+# Description:
+#   Deploy apps with Hubot and Shipr.
+#
+# Configuration:
+#   SHIPR_BASE
+#   SHIPR_GITHUB_ORG
+#
+# Commands:
+#   hubot deploy <app> - Fuck it! We'll do it live!
+#   hubot deploy <app> to <environment> - Deploy <app> to the <environment>
+#   hubot deploy <app>! - Force deploy <app>
+#   hubot deploy <app> to <environment>! - Force deploy <app> to the <environment>
+#
+# Author:
+#   ejholmes
+
 module.exports = (robot) ->
   Deploy = require('./deploy')(robot)
 
