@@ -91,6 +91,22 @@ TESTS =
         id: ':id'
     reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
+  'deploy app to staging':
+    beforeEach: (done) ->
+      @adapter.once 'reply', -> done()
+      @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for app"))
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'foo'
+        config:
+          ENVIRONMENT: 'staging'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
+
 describe 'shipr', ->
 
   beforeEach (done) ->
@@ -99,20 +115,32 @@ describe 'shipr', ->
   afterEach ->
     nock.cleanAll()
 
-  for command, test of TESTS
-    do (command, test) =>
-      describe command, ->
+  describe 'deployment commands', ->
 
-        beforeEach ->
-          shipr
-            .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
-            .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
+    for command, test of TESTS
+      do (command, test) =>
+        describe command, ->
 
-        it 'responds appropriately', (done) ->
-          @adapter.on 'reply', (envelope, strings) ->
-            expect(strings[0]).to.eq(test.reply)
-            done()
-          @adapter.receive(new TextMessage(@user, "hubot #{command}"))
+          beforeEach test.beforeEach if test.beforeEach
+
+          beforeEach ->
+            shipr
+              .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
+              .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
+
+          it 'responds appropriately', (done) ->
+            @adapter.on 'reply', (envelope, strings) ->
+              expect(strings[0]).to.eq(test.reply)
+              done()
+            @adapter.receive(new TextMessage(@user, "hubot #{command}"))
+
+  describe '<branch> is the <environment> branch for <name>', ->
+
+    it 'sets the branch for the app', (done) ->
+      @adapter.on 'reply', (envelope, strings) ->
+        expect(strings[0]).to.eq('Ok, the default branch for r101-api when deployed to staging is foo')
+        done()
+      @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for r101-api"))
 
 # Run the robot.
 #
