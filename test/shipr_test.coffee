@@ -91,6 +91,22 @@ TESTS =
         id: ':id'
     reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
+  'deploy app to staging':
+    beforeEach: (done) ->
+      @adapter.once 'reply', -> done()
+      @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for app"))
+    request:
+      body:
+        repo: 'git@github.com:remind101/app.git'
+        branch: 'foo'
+        config:
+          ENVIRONMENT: 'staging'
+    response:
+      status: 201
+      body:
+        id: ':id'
+    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
+
 describe 'shipr', ->
 
   beforeEach (done) ->
@@ -104,6 +120,8 @@ describe 'shipr', ->
     for command, test of TESTS
       do (command, test) =>
         describe command, ->
+
+          beforeEach test.beforeEach if test.beforeEach
 
           beforeEach ->
             shipr

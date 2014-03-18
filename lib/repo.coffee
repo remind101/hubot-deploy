@@ -4,12 +4,15 @@ class BranchEnvironment
     @key   = "branch:#{@repo.nwo}:#{@environment}"
 
   get: ->
-    switch @environment
-      when 'staging' then 'develop'
-      else 'master'
+    @brain.get(@key) || @default()
 
   set: (branch) ->
     @brain.set(@key, branch)
+
+  default: ->
+    switch @environment
+      when 'staging' then 'develop'
+      else 'master'
 
 module.exports =
   class Repo
