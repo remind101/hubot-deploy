@@ -29,7 +29,7 @@ module.exports = (robot) ->
       @environment = @options.environment || 'production'
       @force       = @options.force || false
 
-      @branch or= if @environment == 'staging' then 'develop' else 'master'
+      @branch or= @repo.branch @environment, robot.brain
 
       @config = ENVIRONMENT: @environment
       @config.FORCE = '1' if @force

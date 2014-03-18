@@ -120,9 +120,9 @@ describe 'shipr', ->
 
     it 'sets the branch for the app', (done) ->
       @adapter.on 'reply', (envelope, strings) ->
-        expect(strings[0]).to.eq('foo')
+        expect(strings[0]).to.eq('Ok, the default branch for r101-api when deployed to staging is foo')
         done()
-      @adapter.receive(new TextMessage(@user, "hubot foo is the staging branch for r101-api"))
+      @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for r101-api"))
 
 # Run the robot.
 #

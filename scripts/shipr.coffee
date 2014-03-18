@@ -36,12 +36,12 @@ module.exports = (robot) ->
     
     deploy msg, name, environment: environment, force: force
 
-  robot.respond /(\S+?) is the (\S+?) branch for (\S+)/, (msg) ->
+  robot.respond /(\S+?) is the default (\S+?) branch for (\S+)/, (msg) ->
     branch      = msg.match[1]
     environment = msg.match[2]
     name        = msg.match[3]
     repo        = new Repo(name)
 
-    console.log robot.brain
+    repo.setBranch environment, branch, robot.brain
 
-    msg.reply "foo"
+    msg.reply "Ok, the default branch for #{name} when deployed to #{environment} is #{branch}"
