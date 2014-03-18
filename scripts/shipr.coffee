@@ -10,7 +10,7 @@
 #   hubot deploy <app> to <environment> - Deploy <app> to the <environment>
 #   hubot deploy <app>! - Force deploy <app>
 #   hubot deploy <app> to <environment>! - Force deploy <app> to the <environment>
-#   hubot <branch> is the <environment> branch for <app> - Set the branch that will be deployed when the <environment> is provided
+#   hubot <branch> is the default <environment> branch for <app> - Set the branch that will be deployed when the <environment> is provided
 #
 # Author:
 #   ejholmes
