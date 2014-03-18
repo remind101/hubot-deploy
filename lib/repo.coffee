@@ -1,18 +1,4 @@
-class BranchEnvironment
-  constructor: (@repo, @environment, @options = {}) ->
-    @brain = @options.brain
-    @key   = "branch:#{@repo.nwo}:#{@environment}"
-
-  get: ->
-    @brain.get(@key) || @default()
-
-  set: (branch) ->
-    @brain.set(@key, branch)
-
-  default: ->
-    switch @environment
-      when 'staging' then 'develop'
-      else 'master'
+BranchEnvironment = require './branch_environment'
 
 module.exports =
   class Repo
