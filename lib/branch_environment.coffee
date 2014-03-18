@@ -1,16 +1,17 @@
-module.exports =
+module.exports = (robot) ->
+  brain = robot.brain
+
   # Public: A class for determining what branch should be deployed
   # for the given environment.
   class BranchEnvironment
-    constructor: (@repo, @environment, @options = {}) ->
-      @brain = @options.brain
+    constructor: (@repo, @environment) ->
       @key   = "branch:#{@repo.nwo}:#{@environment}"
 
     # Public: Get the branch that should be deployed for the environment.
     #
     # Returns String.
     get: ->
-      @brain.get(@key) || @default()
+      brain.get(@key) || @default()
 
     # Public: Set the branch that should be deployed for the environment.
     #
@@ -18,7 +19,7 @@ module.exports =
     #
     # Returns nothing.
     set: (branch) ->
-      @brain.set(@key, branch)
+      brain.set(@key, branch)
 
     # Internal: The default branch mapping.
     # 

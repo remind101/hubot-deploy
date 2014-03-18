@@ -1,6 +1,5 @@
-RepoBranch = require './repo_branch'
-
 module.exports = (robot) ->
+  RepoBranch = require('./repo_branch')(robot)
 
   # Public: Service object for running a deploy.
   #
@@ -29,7 +28,7 @@ module.exports = (robot) ->
       @environment = @options.environment || 'production'
       @force       = @options.force || false
 
-      @branch or= @repo.branch @environment, robot.brain
+      @branch or= @repo.branch @environment
 
       @config = ENVIRONMENT: @environment
       @config.FORCE = '1' if @force

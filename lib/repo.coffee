@@ -1,6 +1,6 @@
-BranchEnvironment = require './branch_environment'
+module.exports = (robot) ->
+  BranchEnvironment = require('./branch_environment')(robot)
 
-module.exports =
   class Repo
     @organization: process.env.SHIPR_GITHUB_ORG
 
@@ -11,15 +11,13 @@ module.exports =
     # Public: Gets the branch that should be deployed for the environment.
     #
     # environment - String environment where the repo will be deployed to.
-    # brain       - A Hubot brain.
     #
     # Returns String.
-    branch: (environment, brain) ->
-      new BranchEnvironment(this, environment, brain: brain).get()
+    branch: (environment) ->
+      new BranchEnvironment(this, environment).get()
 
     # Public: Set the branch that should be deployed for the environment.
     #
     # environment - A String environment where the repo will be deployed to.
-    # brain       - A Hubot brain.
-    setBranch: (environment, branch, brain) ->
-      new BranchEnvironment(this, environment, brain: brain).set(branch)
+    setBranch: (environment, branch) ->
+      new BranchEnvironment(this, environment).set(branch)

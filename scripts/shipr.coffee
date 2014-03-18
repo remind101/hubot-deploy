@@ -17,7 +17,7 @@
 
 module.exports = (robot) ->
   Deploy = require('../lib/deploy')(robot)
-  Repo   = require('../lib/repo')
+  Repo   = require('../lib/repo')(robot)
 
   deploy = (msg, name, options = {}) ->
     d = new Deploy(name, options).deploy (err, res, body) ->

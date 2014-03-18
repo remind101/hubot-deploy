@@ -1,6 +1,6 @@
-Repo = require './repo'
+module.exports = (robot) ->
+  Repo = require('./repo')(robot)
 
-module.exports =
   # Public: A value object for splitting a repo#branch combination.
   #
   # Examples
