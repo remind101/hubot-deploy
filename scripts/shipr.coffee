@@ -42,6 +42,6 @@ module.exports = (robot) ->
     name        = msg.match[3]
     repo        = new Repo(name)
 
-    repo.setBranch environment, branch, robot.brain
+    repo.setBranch environment, branch
 
     msg.reply "Ok, the default branch for #{name} when deployed to #{environment} is #{branch}"
