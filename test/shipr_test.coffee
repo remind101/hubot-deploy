@@ -99,20 +99,30 @@ describe 'shipr', ->
   afterEach ->
     nock.cleanAll()
 
-  for command, test of TESTS
-    do (command, test) =>
-      describe command, ->
+  describe 'deployment commands', ->
 
-        beforeEach ->
-          shipr
-            .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
-            .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
+    for command, test of TESTS
+      do (command, test) =>
+        describe command, ->
 
-        it 'responds appropriately', (done) ->
-          @adapter.on 'reply', (envelope, strings) ->
-            expect(strings[0]).to.eq(test.reply)
-            done()
-          @adapter.receive(new TextMessage(@user, "hubot #{command}"))
+          beforeEach ->
+            shipr
+              .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
+              .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
+
+          it 'responds appropriately', (done) ->
+            @adapter.on 'reply', (envelope, strings) ->
+              expect(strings[0]).to.eq(test.reply)
+              done()
+            @adapter.receive(new TextMessage(@user, "hubot #{command}"))
+
+  describe '<branch> is the <environment> branch for <name>', ->
+
+    it 'sets the branch for the app', (done) ->
+      @adapter.on 'reply', (envelope, strings) ->
+        expect(strings[0]).to.eq('foo')
+        done()
+      @adapter.receive(new TextMessage(@user, "hubot foo is the staging branch for r101-api"))
 
 # Run the robot.
 #

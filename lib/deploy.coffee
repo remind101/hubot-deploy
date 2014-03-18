@@ -1,3 +1,5 @@
+RepoBranch = require './repo_branch'
+
 module.exports = (robot) ->
 
   # Public: Service object for running a deploy.
@@ -8,25 +10,26 @@ module.exports = (robot) ->
   #   new Deploy('r101-api', force: true).deploy()
   #
   class Deploy
+    # The base url where shipr is running.
     @base: process.env.SHIPR_BASE
+
+    # Basic authentication credentials for shipr.
     @auth: process.env.SHIPR_AUTH
+
+    # The deployment endpoint.
     @endpoint: "#{@base}/api/deploys"
-    @organization: process.env.SHIPR_GITHUB_ORG
-    @delimiter: '#'
 
     constructor: (repo, @options = {}) ->
-      components = repo.split(@constructor.delimiter)
+      repoBranch = RepoBranch.parse(repo)
 
-      @name   = components[0]
-      @branch = components[1]
+      @name   = repoBranch.name
+      @branch = repoBranch.branch
+      @repo   = repoBranch.repo
 
       @environment = @options.environment || 'production'
       @force       = @options.force || false
-      @nwo         = "#{@constructor.organization}/#{@name}"
-      @repo        = "git@github.com:#{@nwo}.git"
 
-      unless @branch
-        @branch = if @environment == 'staging' then 'develop' else 'master'
+      @branch or= if @environment == 'staging' then 'develop' else 'master'
 
       @config = ENVIRONMENT: @environment
       @config.FORCE = '1' if @force
@@ -38,7 +41,7 @@ module.exports = (robot) ->
     # Returns nothing.
     deploy: (cb) ->
       data = JSON.stringify
-        repo: @repo
+        repo: @repo.git
         branch: @branch
         config: @config
 
