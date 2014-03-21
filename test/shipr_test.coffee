@@ -14,10 +14,9 @@ TESTS =
   'deploy app to production':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'master'
-        config:
-          ENVIRONMENT: 'production'
+        name: 'remind101/app'
+        ref: 'master'
+        environment: 'production'
     response:
       status: 201
       body:
@@ -27,10 +26,9 @@ TESTS =
   'deploy app':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'master'
-        config:
-          ENVIRONMENT: 'production'
+        name: 'remind101/app'
+        ref: 'master'
+        environment: 'production'
     response:
       status: 201
       body:
@@ -40,10 +38,9 @@ TESTS =
   'deploy app to staging':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'develop'
-        config:
-          ENVIRONMENT: 'staging'
+        name: 'remind101/app'
+        ref: 'develop'
+        environment: 'staging'
     response:
       status: 201
       body:
@@ -53,10 +50,9 @@ TESTS =
   'deploy app#topic to staging':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'topic'
-        config:
-          ENVIRONMENT: 'staging'
+        name: 'remind101/app'
+        ref: 'topic'
+        environment: 'staging'
     response:
       status: 201
       body:
@@ -66,11 +62,10 @@ TESTS =
   'deploy app!':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'master'
-        config:
-          ENVIRONMENT: 'production'
-          FORCE: '1'
+        name: 'remind101/app'
+        ref: 'master'
+        environment: 'production'
+        force: true
     response:
       status: 201
       body:
@@ -80,11 +75,10 @@ TESTS =
   'deploy app to staging!':
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'develop'
-        config:
-          ENVIRONMENT: 'staging'
-          FORCE: '1'
+        name: 'remind101/app'
+        ref: 'develop'
+        environment: 'staging'
+        force: true
     response:
       status: 201
       body:
@@ -97,10 +91,9 @@ TESTS =
       @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for app"))
     request:
       body:
-        repo: 'git@github.com:remind101/app.git'
-        branch: 'foo'
-        config:
-          ENVIRONMENT: 'staging'
+        name: 'remind101/app'
+        ref: 'foo'
+        environment: 'staging'
     response:
       status: 201
       body:

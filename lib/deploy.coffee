@@ -30,22 +30,21 @@ module.exports = (robot) ->
 
       @branch or= @repo.branch @environment
 
-      @config = ENVIRONMENT: @environment
-      @config.FORCE = '1' if @force
-
     # Public: Tell shipr to deploy the repo.
     #
     # cb - A callback function that will be called on success or failure.
     #
     # Returns nothing.
     deploy: (cb) ->
-      data = JSON.stringify
-        repo: @repo.git
-        branch: @branch
-        config: @config
+      data =
+        name: @repo.nwo
+        ref: @branch
+        environment: @environment
+
+      data.force = true if @force
 
       @_http(@constructor.endpoint)
-        .post(data) (err, res, body) ->
+        .post(JSON.stringify data) (err, res, body) ->
           cb err, res, JSON.parse(body)
 
       this
