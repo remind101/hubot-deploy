@@ -7,6 +7,7 @@ module.exports = (robot) ->
   #
   #   new Deploy('r101-api').deploy()
   #   new Deploy('r101-api', force: true).deploy()
+  #   new Deploy('r101-api', lock: true).deploy()
   #
   class Deploy
     # The base url where shipr is running.
@@ -27,6 +28,8 @@ module.exports = (robot) ->
 
       @environment = @options.environment || 'production'
       @force       = @options.force || false
+
+      @repo.lock(@environment, "#{@options.sender}:#{@options.feature}") if @options.lock
 
       @branch or= @repo.branch @environment
 
@@ -49,6 +52,9 @@ module.exports = (robot) ->
           cb err, res, JSON.parse(body)
 
       this
+
+    deployable: ->
+      @repo.locked()
 
     # Internal: Make an http request.
     #
