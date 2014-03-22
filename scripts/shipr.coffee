@@ -21,7 +21,13 @@ module.exports = (robot) ->
 
   deploy = (msg, name, options = {}) ->
     d = new Deploy(name, options).deploy (err, res, body) ->
-      msg.reply "Deploying #{d.name} to #{d.environment}: #{Deploy.base}/deploys/#{body.id}"
+      if (res.statusCode != 201)
+        if body.message
+          msg.reply body.message
+        else
+          msg.reply JSON.stringify(body)
+      else
+        msg.reply '' if process.env.NODE_ENV == 'test'
 
   robot.respond /deploy (\S+?)(!)?$/, (msg) ->
     name  = msg.match[1]

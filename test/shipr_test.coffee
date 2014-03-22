@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test'
 process.env.SHIPR_BASE = 'http://shipr.test'
 process.env.SHIPR_GITHUB_ORG = 'remind101'
 process.env.SHIPR_AUTH = ':apikey'
@@ -22,7 +23,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id"
 
   'deploy app':
     request:
@@ -35,7 +35,19 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id"
+
+  'deploy app':
+    request:
+      body:
+        name: 'remind101/app'
+        ref: 'master'
+        payload:
+          environment: 'production'
+    response:
+      status: 422
+      body:
+        message: 'No ref found for develop'
+    reply: "No ref found for develop"
 
   'deploy app to staging':
     request:
@@ -48,7 +60,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
   'deploy app#topic to staging':
     request:
@@ -61,7 +72,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
   'deploy app!':
     request:
@@ -75,7 +85,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to production: #{process.env.SHIPR_BASE}/deploys/:id"
 
   'deploy app to staging!':
     request:
@@ -89,7 +98,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
   'deploy app to staging':
     beforeEach: (done) ->
@@ -105,7 +113,6 @@ TESTS =
       status: 201
       body:
         id: ':id'
-    reply: "Deploying app to staging: #{process.env.SHIPR_BASE}/deploys/:id"
 
 describe 'shipr', ->
 
@@ -130,7 +137,7 @@ describe 'shipr', ->
 
           it 'responds appropriately', (done) ->
             @adapter.on 'reply', (envelope, strings) ->
-              expect(strings[0]).to.eq(test.reply)
+              expect(strings[0]).to.eq(test.reply) if test.reply?
               done()
             @adapter.receive(new TextMessage(@user, "hubot #{command}"))
 
