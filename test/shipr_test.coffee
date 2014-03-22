@@ -19,6 +19,7 @@ TESTS =
         ref: 'master'
         payload:
           environment: 'production'
+          user: 'eric'
     response:
       status: 201
       body:
@@ -31,6 +32,7 @@ TESTS =
         ref: 'master'
         payload:
           environment: 'production'
+          user: 'eric'
     response:
       status: 201
       body:
@@ -43,6 +45,7 @@ TESTS =
         ref: 'master'
         payload:
           environment: 'production'
+          user: 'eric'
     response:
       status: 422
       body:
@@ -56,6 +59,7 @@ TESTS =
         ref: 'develop'
         payload:
           environment: 'staging'
+          user: 'eric'
     response:
       status: 201
       body:
@@ -68,6 +72,7 @@ TESTS =
         ref: 'topic'
         payload:
           environment: 'staging'
+          user: 'eric'
     response:
       status: 201
       body:
@@ -80,6 +85,7 @@ TESTS =
         ref: 'master'
         payload:
           environment: 'production'
+          user: 'eric'
         force: true
     response:
       status: 201
@@ -93,6 +99,7 @@ TESTS =
         ref: 'develop'
         payload:
           environment: 'staging'
+          user: 'eric'
         force: true
     response:
       status: 201
@@ -109,6 +116,7 @@ TESTS =
         ref: 'foo'
         payload:
           environment: 'staging'
+          user: 'eric'
     response:
       status: 201
       body:

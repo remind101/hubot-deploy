@@ -21,6 +21,7 @@ module.exports = (robot) ->
     constructor: (repo, @options = {}) ->
       repoBranch = RepoBranch.parse(repo)
 
+      @user   = @options.user
       @name   = repoBranch.name
       @branch = repoBranch.branch
       @repo   = repoBranch.repo
@@ -41,6 +42,7 @@ module.exports = (robot) ->
         ref: @branch
         payload:
           environment: @environment
+          user: @user
 
       data.force = true if @force
 

@@ -33,14 +33,14 @@ module.exports = (robot) ->
     name  = msg.match[1]
     force = msg.match[2]
 
-    deploy msg, name, force: force
+    deploy msg, name, force: force, user: msg.message.user.name
 
   robot.respond /deploy (\S+?) to (\S+?)(!)?$/, (msg) ->
     name        = msg.match[1]
     environment = msg.match[2]
     force       = msg.match[3]
     
-    deploy msg, name, environment: environment, force: force
+    deploy msg, name, environment: environment, force: force, user: msg.message.user.name
 
   robot.respond /(\S+?) is the default (\S+?) branch for (\S+)/, (msg) ->
     branch      = msg.match[1]
