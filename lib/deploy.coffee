@@ -39,7 +39,8 @@ module.exports = (robot) ->
       data =
         name: @repo.nwo
         ref: @branch
-        environment: @environment
+        payload:
+          environment: @environment
 
       data.force = true if @force
 
