@@ -44,7 +44,7 @@ module.exports = (robot) ->
 
     deploy msg, name, environment: environment, force: force
 
-  robot.respond /deploy (\S+?) to (\S+?)(!)? and lock (\S+?)/, (msg) ->
+  robot.respond /deploy (\S+?) to (\S+?) and lock (\S+?)(!)?$/, (msg) ->
     name        = msg.match[1]
     environment = msg.match[2]
     force       = msg.match[3]
