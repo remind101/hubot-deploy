@@ -27,7 +27,7 @@ module.exports = (robot) ->
       @repo   = repoBranch.repo
 
       @environment = @options.environment || 'production'
-      @force       = @options.force || false
+      @force       = !!(@options.force || false)
 
       @branch or= @repo.branch @environment
 
@@ -43,6 +43,7 @@ module.exports = (robot) ->
         payload:
           environment: @environment
           user: @user
+          force: @force
 
       data.force = true if @force
 

@@ -20,6 +20,7 @@ TESTS =
         payload:
           environment: 'production'
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -33,6 +34,7 @@ TESTS =
         payload:
           environment: 'production'
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -46,6 +48,7 @@ TESTS =
         payload:
           environment: 'production'
           user: 'eric'
+          force: false
     response:
       status: 422
       body:
@@ -60,6 +63,7 @@ TESTS =
         payload:
           environment: 'staging'
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -73,6 +77,7 @@ TESTS =
         payload:
           environment: 'staging'
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -86,6 +91,7 @@ TESTS =
         payload:
           environment: 'production'
           user: 'eric'
+          force: true
         force: true
     response:
       status: 201
@@ -100,6 +106,7 @@ TESTS =
         payload:
           environment: 'staging'
           user: 'eric'
+          force: true
         force: true
     response:
       status: 201
@@ -117,6 +124,7 @@ TESTS =
         payload:
           environment: 'staging'
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
