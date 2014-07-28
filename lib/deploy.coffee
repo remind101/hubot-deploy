@@ -40,8 +40,8 @@ module.exports = (robot) ->
       data =
         name: @repo.nwo
         ref: @branch
+        environment: @environment
         payload:
-          environment: @environment
           user: @user
           force: @force
 
