@@ -17,8 +17,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'master'
+        environment: 'production'
         payload:
-          environment: 'production'
           user: 'eric'
           force: false
     response:
@@ -31,8 +31,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'master'
+        environment: 'production'
         payload:
-          environment: 'production'
           user: 'eric'
           force: false
     response:
@@ -45,8 +45,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'master'
+        environment: 'production'
         payload:
-          environment: 'production'
           user: 'eric'
           force: false
     response:
@@ -60,8 +60,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'develop'
+        environment: 'staging'
         payload:
-          environment: 'staging'
           user: 'eric'
           force: false
     response:
@@ -74,8 +74,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'topic'
+        environment: 'staging'
         payload:
-          environment: 'staging'
           user: 'eric'
           force: false
     response:
@@ -88,8 +88,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'master'
+        environment: 'production'
         payload:
-          environment: 'production'
           user: 'eric'
           force: true
         force: true
@@ -103,8 +103,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'develop'
+        environment: 'staging'
         payload:
-          environment: 'staging'
           user: 'eric'
           force: true
         force: true
@@ -121,8 +121,8 @@ TESTS =
       body:
         name: 'remind101/app'
         ref: 'foo'
+        environment: 'staging'
         payload:
-          environment: 'staging'
           user: 'eric'
           force: false
     response:
