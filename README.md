@@ -6,8 +6,12 @@ This is a [Hubot](https://github.com/github/hubot) script for the [GitHub Deploy
 
 1. Add hubot-deploy to your package.json file:
 
-   ```bash
-   $ npm install hubot-deploy --save
+   ```json
+   {
+     "dependencies": {
+       "hubot-deploy": "remind101/hubot-deploy"
+     }
+   }
    ```
 
 2. Add `hubot-deploy` to external-scripts.json:
