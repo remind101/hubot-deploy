@@ -9,14 +9,12 @@ module.exports = (robot) ->
   #   new Deploy('r101-api', force: true).deploy()
   #
   class Deploy
-    # The base url where shipr is running.
-    @base: process.env.SHIPR_BASE
+    # The base url for the GitHub api.
+    @base: 'https://api.github.com'
 
-    # Basic authentication credentials for shipr.
-    @auth: process.env.SHIPR_AUTH
-
-    # The deployment endpoint.
-    @endpoint: "#{@base}/api/deploys"
+    # GitHub auth token. This token should have access to all repos
+    # and should have the `deployment` scope.
+    @token: process.env.GITHUB_TOKEN
 
     constructor: (repo, @options = {}) ->
       repoBranch = RepoBranch.parse(repo)
@@ -31,23 +29,21 @@ module.exports = (robot) ->
 
       @branch or= @repo.branch @environment
 
-    # Public: Tell shipr to deploy the repo.
+    # Public: Tell GitHub to deploy the repo.
     #
     # cb - A callback function that will be called on success or failure.
     #
     # Returns nothing.
     deploy: (cb) ->
       data =
-        name: @repo.nwo
         ref: @branch
         environment: @environment
+        auto_merge: false
+        required_contexts: if @force then [] else null
         payload:
           user: @user
-          force: @force
 
-      data.force = true if @force
-
-      @_http(@constructor.endpoint)
+      @_http("#{@constructor.base}/repos/#{@repo.nwo}/deployments")
         .post(JSON.stringify data) (err, res, body) ->
           cb err, res, JSON.parse(body)
 
@@ -57,9 +53,9 @@ module.exports = (robot) ->
     #
     # Returns a scoped http client.
     _http: ->
-      auth = "Basic #{new Buffer(@constructor.auth).toString('base64')}"
+      auth = "Bearer #{@constructor.token}"
 
       robot.http.apply(robot.http, arguments)
-        .header('Accept', 'application/json')
+        .header('Accept', 'application/vnd.github.cannonball-preview+json')
         .header('Content-Type', 'application/json')
         .header('Authorization', auth)

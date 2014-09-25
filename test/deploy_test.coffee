@@ -1,26 +1,25 @@
 process.env.NODE_ENV = 'test'
-process.env.SHIPR_BASE = 'http://shipr.test'
-process.env.SHIPR_GITHUB_ORG = 'remind101'
-process.env.SHIPR_AUTH = ':apikey'
+process.env.GITHUB_ORG = 'remind101'
+process.env.GITHUB_TOKEN = '1234'
 
 {expect} = require 'chai'
-init     = require '../scripts/shipr'
+init     = require '../scripts/deploy'
 nock     = require 'nock'
 
 {Robot,TextMessage} = require('hubot')
 
-shipr = nock(process.env.SHIPR_BASE).log(console.log)
+api = nock('https://api.github.com').log(console.log)
 
 TESTS =
   'deploy app to production':
     request:
       body:
-        name: 'remind101/app'
         ref: 'master'
         environment: 'production'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 201
       body:
@@ -29,12 +28,12 @@ TESTS =
   'deploy app':
     request:
       body:
-        name: 'remind101/app'
         ref: 'master'
         environment: 'production'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 201
       body:
@@ -43,12 +42,12 @@ TESTS =
   'deploy app':
     request:
       body:
-        name: 'remind101/app'
         ref: 'master'
         environment: 'production'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 422
       body:
@@ -58,12 +57,12 @@ TESTS =
   'deploy app to staging':
     request:
       body:
-        name: 'remind101/app'
         ref: 'develop'
         environment: 'staging'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 201
       body:
@@ -72,12 +71,12 @@ TESTS =
   'deploy app#topic to staging':
     request:
       body:
-        name: 'remind101/app'
         ref: 'topic'
         environment: 'staging'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 201
       body:
@@ -86,13 +85,12 @@ TESTS =
   'deploy app!':
     request:
       body:
-        name: 'remind101/app'
         ref: 'master'
         environment: 'production'
+        auto_merge: false
+        required_contexts: []
         payload:
           user: 'eric'
-          force: true
-        force: true
     response:
       status: 201
       body:
@@ -101,13 +99,12 @@ TESTS =
   'deploy app to staging!':
     request:
       body:
-        name: 'remind101/app'
         ref: 'develop'
         environment: 'staging'
+        auto_merge: false
+        required_contexts: []
         payload:
           user: 'eric'
-          force: true
-        force: true
     response:
       status: 201
       body:
@@ -119,18 +116,18 @@ TESTS =
       @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for app"))
     request:
       body:
-        name: 'remind101/app'
         ref: 'foo'
         environment: 'staging'
+        auto_merge: false
+        required_contexts: null
         payload:
           user: 'eric'
-          force: false
     response:
       status: 201
       body:
         id: ':id'
 
-describe 'shipr', ->
+describe 'deploy', ->
 
   beforeEach (done) ->
     runRobot.call(this, done)
@@ -142,13 +139,13 @@ describe 'shipr', ->
 
     for command, test of TESTS
       do (command, test) =>
-        describe command, ->
+        describe '"' + command + '"', ->
 
           beforeEach test.beforeEach if test.beforeEach
 
           beforeEach ->
-            shipr
-              .post('/api/deploys', test.request.body, 'Authorization': 'Basic OmFwaWtleQ==')
+            api
+              .post('/repos/remind101/app/deployments', test.request.body, 'Authorization': 'Bearer 1234')
               .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
 
           it 'responds appropriately', (done) ->

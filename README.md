@@ -1,27 +1,26 @@
-# Hubot Shipr
+# Hubot Deploy
 
-This is a [Hubot](https://github.com/github/hubot) script for [Shipr](https://github.com/remind101/shipr)
+This is a [Hubot](https://github.com/github/hubot) script for the [GitHub Deployments API](https://developer.github.com/v3/repos/deployments/).
 
 ## Install
 
-1. Add hubot-shipr to your package.json file:
+1. Add hubot-deploy to your package.json file:
 
    ```bash
-   $ npm install hubot-shipr --save
+   $ npm install hubot-deploy --save
    ```
 
-2. Add `hubot-shipr` to external-scripts.json:
+2. Add `hubot-deploy` to external-scripts.json:
 
    ```json
-   ["hubot-shipr"]
+   ["hubot-deploy"]
    ```
 
 3. Set the the following environment variables on your instance of hubot:
 
    ```
-   SHIPR_BASE=<base url for shipr>
-   SHIPR_AUTH=:<api key>
-   SHIPR_GITHUB_ORG=<your github organization>
+   GITHUB_TOKEN=:<api key>
+   GITHUB_ORG=<your github organization>
    ```
 
 ## Usage
