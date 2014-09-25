@@ -1,9 +1,9 @@
 # Description:
-#   Deploy apps with Hubot and Shipr.
+#   Deploy apps with Hubot and GitHub Deployments.
 #
 # Configuration:
-#   SHIPR_BASE
-#   SHIPR_GITHUB_ORG
+#   GITHUB_TOKEN
+#   GITHUB_ORG
 #
 # Commands:
 #   hubot deploy <app> - Fuck it! We'll do it live!

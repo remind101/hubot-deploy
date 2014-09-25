@@ -1,14 +1,14 @@
 {
-  "name": "hubot-shipr",
+  "name": "hubot-deploy",
   "version": "1.1.0",
   "main": "index.coffee",
   "repository": {
     "type": "git",
-    "url": "https://github.com/remind101/hubot-shipr"
+    "url": "https://github.com/remind101/hubot-deploy"
   },
   "keywords": [
     "hubot",
-    "shipr"
+    "deploy"
   ],
   "author": "Eric Holmes",
   "license": "MIT",

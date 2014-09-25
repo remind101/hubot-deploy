@@ -2,7 +2,7 @@ module.exports = (robot) ->
   BranchEnvironment = require('./branch_environment')(robot)
 
   class Repo
-    @organization: process.env.SHIPR_GITHUB_ORG
+    @organization: process.env.GITHUB_ORG
 
     constructor: (@name) ->
       @nwo = "#{@constructor.organization}/#{@name}"
