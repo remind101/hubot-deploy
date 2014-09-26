@@ -20,6 +20,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -34,6 +35,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -48,6 +50,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 422
       body:
@@ -63,6 +66,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -77,6 +81,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
@@ -91,6 +96,7 @@ TESTS =
         required_contexts: []
         payload:
           user: 'eric'
+          force: true
     response:
       status: 201
       body:
@@ -105,6 +111,7 @@ TESTS =
         required_contexts: []
         payload:
           user: 'eric'
+          force: true
     response:
       status: 201
       body:
@@ -122,6 +129,7 @@ TESTS =
         required_contexts: null
         payload:
           user: 'eric'
+          force: false
     response:
       status: 201
       body:
