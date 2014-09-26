@@ -42,6 +42,7 @@ module.exports = (robot) ->
         required_contexts: if @force then [] else null
         payload:
           user: @user
+          force: @force
 
       @_http("#{@constructor.base}/repos/#{@repo.nwo}/deployments")
         .post(JSON.stringify data) (err, res, body) ->
