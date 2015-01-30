@@ -2,10 +2,11 @@ module.exports = (robot) ->
   BranchEnvironment = require('./branch_environment')(robot)
 
   class Repo
-    @organization: process.env.GITHUB_ORG
+    @defaultOrganization: process.env.GITHUB_ORG
 
     constructor: (@name) ->
-      @nwo = "#{@constructor.organization}/#{@name}"
+      @nwo = "#{@constructor.defaultOrganization}/#{@name}"
+      @nwo = @name if @name.indexOf('/') > -1
       @git = "git@github.com:#{@nwo}.git"
 
     # Public: Gets the branch that should be deployed for the environment.

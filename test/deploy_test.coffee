@@ -13,6 +13,7 @@ api = nock('https://api.github.com').log(console.log)
 TESTS =
   'deploy app to production':
     request:
+      organization: 'remind101'
       body:
         ref: 'master'
         environment: 'production'
@@ -28,6 +29,7 @@ TESTS =
 
   'deploy app':
     request:
+      organization: 'remind101'
       body:
         ref: 'master'
         environment: 'production'
@@ -43,6 +45,7 @@ TESTS =
 
   'deploy app':
     request:
+      organization: 'remind101'
       body:
         ref: 'master'
         environment: 'production'
@@ -59,6 +62,7 @@ TESTS =
 
   'deploy app to staging':
     request:
+      organization: 'remind101'
       body:
         ref: 'develop'
         environment: 'staging'
@@ -74,6 +78,7 @@ TESTS =
 
   'deploy app#topic to staging':
     request:
+      organization: 'remind101'
       body:
         ref: 'topic'
         environment: 'staging'
@@ -89,6 +94,7 @@ TESTS =
 
   'deploy app!':
     request:
+      organization: 'remind101'
       body:
         ref: 'master'
         environment: 'production'
@@ -104,6 +110,7 @@ TESTS =
 
   'deploy app to staging!':
     request:
+      organization: 'remind101'
       body:
         ref: 'develop'
         environment: 'staging'
@@ -122,9 +129,26 @@ TESTS =
       @adapter.once 'reply', -> done()
       @adapter.receive(new TextMessage(@user, "hubot foo is the default staging branch for app"))
     request:
+      organization: 'remind101'
       body:
         ref: 'foo'
         environment: 'staging'
+        auto_merge: false
+        required_contexts: null
+        payload:
+          user: 'eric'
+          force: false
+    response:
+      status: 201
+      body:
+        id: ':id'
+
+  'deploy ejholmes/app to production':
+    request:
+      organization: 'ejholmes'
+      body:
+        ref: 'master'
+        environment: 'production'
         auto_merge: false
         required_contexts: null
         payload:
@@ -152,8 +176,9 @@ describe 'deploy', ->
           beforeEach test.beforeEach if test.beforeEach
 
           beforeEach ->
+            path = "/repos/#{test.request.organization}/app/deployments"
             api
-              .post('/repos/remind101/app/deployments', test.request.body, 'Authorization': 'Bearer 1234')
+              .post(path, test.request.body, 'Authorization': 'Bearer 1234')
               .reply(test.response.status, test.response.body, { 'Content-Type': 'application/json' })
 
           it 'responds appropriately', (done) ->
