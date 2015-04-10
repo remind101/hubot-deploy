@@ -21,7 +21,7 @@ module.exports = (robot) ->
 
   deploy = (msg, name, options = {}) ->
     d = new Deploy(name, options).deploy (err, res, body) ->
-      msg.reply "This plugin is being deprecated and replaced with <https://github.com/remind101/deploy>. Go there to install."
+      msg.reply "This plugin is being deprecated and replaced with https://github.com/remind101/deploy"
       if (res.statusCode != 201)
         if body.message
           msg.reply body.message
